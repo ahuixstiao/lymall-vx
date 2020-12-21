@@ -30,7 +30,6 @@ Page({
       header: {"content-type":"application/x-www-form-urlencoded"},
       success:function(result){
         if(result.data.errno==0){
-          console.log(result);
           that.setData({
             goodsCount:result.data.data.goodsCount,//商品总数
             banner:result.data.data.banner,//广告

@@ -3,16 +3,16 @@ var app = getApp();
 
 Page({
   data: {
-    keywrod: '',
+    keywrod:'',//用户输入的关键字
     searchStatus: false,
     goodsList: [],
     helpKeyword: [],
     historyKeyword: [],
     categoryFilter: false,
     currentSort: 'name',
-    currentSortType: 'default',
-    currentSortOrder: 'desc',
-    filterCategory: [],
+    currentSortType: 'default',//排序类型 综合 default  价格 price 分类category
+    currentSortOrder: 'desc',//排序方法 升序或降序
+    filterCategory: [],//
 
     defaultKeyword: {},//默认关键字
     hotKeyword: [],//热门关键字

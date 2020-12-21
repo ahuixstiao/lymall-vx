@@ -2,11 +2,15 @@
   <view class="search-header">
     <view class="input-box">
       <van-icon name="search"/>
+      <!-- 搜索框 keyword-->
       <input name="input" class="keywrod" focus="true" value="{{keyword}}" confirm-type="search" bindinput="inputChange" bindfocus="inputFocus" bindconfirm="onKeywordConfirm" placeholder="{{defaultKeyword.keyword}}" />
       <van-icon class="del" wx:if="{{keyword}}" bindtap="clearKeyword" name="cross" />
     </view>
+    <!-- 取消按钮 closeSearch -->
     <view class="right" bindtap="closeSearch">取消</view>
   </view>
+
+  <!-- 历史记录 historyKeyword-->
   <view class="no-search" wx:if="{{ !searchStatus}}">
     <view class="search-keywords search-history" wx:if="{{!keyword  && historyKeyword.length}}">
       <view class="h">
@@ -17,6 +21,8 @@
         <view class="item" bindtap="onKeywordTap" data-keyword="{{item.keyword}}" wx:for="{{historyKeyword}}" wx:key="keyword" hover-class="navigator-hover">{{item.keyword}}</view>
       </view>
     </view>
+
+    <!-- 热门搜索 hotKeyword-->
     <view class="search-keywords search-hot" wx:if="{{!keyword && hotKeyword.length}}">
       <view class="h">
         <text class="title">热门搜索</text>
@@ -29,7 +35,7 @@
       <view class="item" hover-class="navigator-hover" wx:for="{{helpKeyword}}" wx:key="id" bindtap="onKeywordTap" data-keyword="{{item}}">{{item}}</view>
     </view>
   </view>
-
+  <!-- 排序类型 currentSortType -->
   <view class="search-result" wx:if="{{ searchStatus && goodsList.length}}">
     <view class="sort">
       <view class="sort-box">
@@ -61,6 +67,6 @@
   </view>
 
   <view class="search-result-empty" wx:if="{{!goodsList.length && searchStatus}}">
-    <text class="text">您寻找的商品还未上架</text>
+    <text class="text">您寻找的商品已经遗失在璃玥的野外～</text>
   </view>
 </scroll-view>
