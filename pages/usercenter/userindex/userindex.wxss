@@ -1,0 +1,125 @@
+/* pages/usercenter/userindex.wxss */
+page {
+  height: 100%;
+  width: 100%;
+  background: #f4f4f4;
+}
+
+.container {
+  background: #f4f4f4;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.userinfo-box {
+  /* 角度渐变 */
+  background: linear-gradient(180deg, #7E89FE 27%, #3AB4FF);
+  background-color: #9880FE;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  font-size: 28rpx;
+}
+
+.userinfo-box .userphoto-img {
+  height: 148rpx;
+  width: 148rpx;
+  border-radius: 50%;
+}
+
+.userinfo-box .username-box {
+  flex: 1;
+  height: 85rpx;
+  padding-left: 31.25rpx;
+}
+
+.userinfo-box .username-text {
+  display: block;
+  height: 45rpx;
+  line-height: 45rpx;
+  color: #ffffff;
+  font-size: 37.5rpx;
+  margin-bottom: 10rpx;
+}
+
+.logout-text {
+  margin-top: 30rpx;
+  margin-left: 300rpx;
+  height: 90rpx;
+  width: 90%;
+  line-height: 100rpx;
+  text-align: center;
+  background: #fff;
+  font-size: 35rpx;
+  border-radius: 6rpx;
+  color: #fff;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: flex;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin-left: 5%;
+  text-align: center;
+  /* padding-left: -5rpx; */
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  letter-spacing: 3rpx;
+  background: #7E89FE;
+}
+
+.user-area {
+  width: 100%;
+  margin-top: -8rpx;
+  background: #fff;
+}
+
+.user-row {
+  height: 86rpx;
+  line-height: 86rpx;
+  border-bottom: 1px solid #fafafa;
+}
+
+.user-row-title {
+  float: left;
+  height: 86rpx;
+  font-weight: 550;
+  line-height: 86rpx;
+  margin-left: 35rpx;
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+}
+
+.user-column {
+  height: 140rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_column_item {
+  width: 30%;
+  height: 140rpx;
+  background: #fff;
+  text-align: center;
+  position: relative;
+}
+
+.user_column_item_image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 30rpx;
+}
+
+.user_column_item_text {
+  /* border: 1px solid black; */
+  margin-top: 5rpx;
+  font-size: 24rpx;
+  color: #555;
+}

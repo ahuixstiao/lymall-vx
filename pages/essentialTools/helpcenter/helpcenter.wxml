@@ -1,0 +1,27 @@
+<!--pages/essential/helpcenter/helpcenter.wxml-->
+<!-- 父容器 -->
+<view class="container">
+  <!-- 子容器 -->
+  <view class="problem-box" wx:for="{{problem}}" wx:key="key">
+    <!-- 问题文本容器 -->
+    <view class="problem-box-item">
+      <view class="question-box">
+        <!-- 红点文本 -->
+        <text class="spot-text"></text>
+        <!-- 问题文本 -->
+        <text class="question-text">{{item.issueQuestion}}</text>
+      </view>
+      <!-- 答案文本-->
+      <text class="answer-text">{{item.issueAnswer}}</text>
+    </view>
+  </view>
+
+  <!-- 底部按钮容器 -->
+  <view class="botton-box">
+    <!-- 上一页 -->
+    <view class="{{currentPage<=pages?prePageDisabale:prePage}}" bindtap="prePage">上一页</view>
+    <!-- 下一页 -->
+    <view class="{{currentPage>=pages?nextPageDisabale:nextPage}}" bindtap="nextPage">下一页</view>
+  </view>
+
+</view>

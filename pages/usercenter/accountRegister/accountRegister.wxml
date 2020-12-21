@@ -1,0 +1,43 @@
+<!--pages/usercenter/accountRegister/accountRegister.wxml-->
+<!-- 父容器 -->
+<view class="container">
+  <!-- 子容器 -->
+  <view class="image-box">
+    <image class="userphoto-img" src="{{userAvatar}}" bindtap="chooseImage"/>
+  </view>
+  <!-- 子容器 -->
+  <view class="form-box">
+    <view class="form-item">
+      <!-- 用户名 -->
+      <input class="username" focus="true" placeholder="用户名" value="{{username}}" bindinput="usernameInput"/>
+    </view>
+    <view class="form-item">
+      <!-- 密码 -->
+      <input class="password" placeholder="密码" password="true" value="{{password}}" bindinput="passwordInput"/>
+    </view>
+    <view class="form-item">
+      <!-- 确认密码 -->
+      <input class="rePassword" placeholder="确认密码" password="true" value="{{rePassword}}" bindinput="rePasswordInput"/>
+    </view>
+    <view class="form-item">
+      <!-- 手机号 -->
+      <input class="phoneNum" placeholder="手机号" value="{{userMobile}}" bindinput="userMobileInput"/>
+    </view>
+    <view class="form-item">
+      <!-- 昵称 -->
+      <input class="userNickname" placeholder="昵称" value="{{userNickname}}" bindinput="userNicknameInput"/>
+    </view>
+      <!-- 性别 -->
+    <view>
+      <radio-group class="radio" bindchange="handleChange">
+        <!-- 在任意元素上层使用wx:for="{{数组名}}"属性绑定一个数组，即可使用数组中各项的数据重复渲染该元素下的元素。 -->
+        <label class="label-radio" wx:for="{{items}}" wx:key="key">
+          <!-- 默认数组的当前项的下标变量名默认为index[x]，数组当前项的变量名默认为 item.xxx -->
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+        </label>
+      </radio-group>
+    </view>
+    <!-- 注册 -->
+    <button class="register-btn" bindtap="register">注册</button>
+  </view>
+</view>

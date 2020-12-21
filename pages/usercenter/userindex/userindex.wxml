@@ -1,0 +1,111 @@
+<!--pages/usercenter/userindex.wxml-->
+<!-- <text>pages/usercenter/userindex.wxml</text> -->
+<!-- 父容器 -->
+<view class="container">
+  <!-- 登录选项子容器 -->
+  <view class="userinfo-box">
+    <image class="userphoto-img" src="{{photoUrl}}"/>
+    <!-- 登录文本子容器 -->
+    <view class="username-box" bindtap="loginChoose">
+      <text class="username-text" >{{username}}</text>
+    </view>
+  </view>
+  <!-- 订单栏 -->
+  <view class="user-area">
+    <view class="user-row">
+        <!-- 我的订单 -->
+        <text class="user-row-title">我的订单</text>
+    </view>
+    <view class="user-column">
+      <view class="user_column_item" bindtap="pendpay">
+        <!-- 待付款 -->
+        <image class="user_column_item_image" src="/static/images/pendpay.png"/>
+        <view class="user_column_item_text">待付款</view>
+      </view>
+      <view class="user_column_item" bindtap="send">
+        <!-- 代发货 -->
+        <image class="user_column_item_image" src="/static/images/send.png"/>
+        <view class="user_column_item_text">待发货</view>
+      </view>
+      <view class="user_column_item" bindtap="receive">
+        <!-- 待收货 -->
+        <image class="user_column_item_image" src="/static/images/receive.png/"/>
+        <view class="user_column_item_text">待收货</view>
+      </view>
+      <view class="user_column_item" bindtap="comment">
+        <!-- 待评价 -->
+        <image class="user_column_item_image" src="/static/images/comment.png"/>
+        <view class="user_column_item_text">待评价</view>
+      </view>
+      <view class="user_column_item" bindtap="aftersale">
+        <!-- 售后 -->
+        <image class="user_column_item_image" src="/static/images/aftersale.png"/>
+        <view class="user_column_item_text">售后</view>
+      </view>
+    </view>
+    <!-- 核心服务 -->
+    <view class="user-row">
+        <text class="user-row-title">核心服务</text>
+    </view>
+    <view class="user-column">
+      <!-- 优惠卷 -->
+      <view class="user_column_item">
+        <image class="user_column_item_image" src="/static/images/coupon.png"/>
+        <view class="user_column_item_text">优惠卷</view>
+      </view>
+      <view class="user_column_item">
+        <!-- 商品收藏 -->
+        <image class="user_column_item_image" src="/static/images/collect.png"/>
+        <view class="user_column_item_text">商品收藏</view>
+      </view>
+      <view class="user_column_item" bindtap="browseFootprint">
+        <!-- 浏览足迹 -->
+        <image class="user_column_item_image" src="/static/images/footprint.png"/>
+        <view class="user_column_item_text">浏览足迹</view>
+      </view>
+      <view class="user_column_item">
+        <!-- 我的拼团 -->
+        <image class="user_column_item_image" src="/static/images/group.png"/>
+        <view class="user_column_item_text">我的拼团</view>
+      </view>
+      <view class="user_column_item" bindtap="address">
+        <!-- 地址管理 -->
+        <image class="user_column_item_image" src="/static/images/address.png"/>
+        <view class="user_column_item_text">地址管理</view>
+      </view>
+    </view>
+    <!-- 必备工具 -->
+    <view class="user-row">
+        <text class="user-row-title">必备工具</text>
+    </view>
+    <view class="user-column">
+      <view class="user_column_item">
+        <!-- 绑定手机 -->
+        <image class="user_column_item_image" src="/static/images/mobile.png"/>
+        <view class="user_column_item_text">绑定手机</view>
+      </view>
+      <view class="user_column_item" bindtap="helpPage">
+        <!-- 帮助中心 -->
+        <image class="user_column_item_image" src="/static/images/help.png"/>
+        <view class="user_column_item_text">帮助中心</view>
+      </view>
+      <view class="user_column_item">
+        <!-- 意见反馈 -->
+        <image class="user_column_item_image" src="/static/images/feedback.png"/>
+        <view class="user_column_item_text">意见反馈</view>
+      </view>
+      <view class="user_column_item">
+        <!-- 联系客服 -->
+        <image class="user_column_item_image" src="/static/images/customer.png"/>
+        <view class="user_column_item_text">联系客服</view>
+      </view>
+      <view class="user_column_item">
+        <!-- 关于我们 -->
+        <image class="user_column_item_image" src="/static/images/about.png"/>
+        <view class="user_column_item_text">关于我们</view>
+      </view>
+    </view>
+  </view>
+
+  <text class="logout-text" bindtap="loginout" wx:if="{{hashLogin}}">退出登录</text>
+</view>

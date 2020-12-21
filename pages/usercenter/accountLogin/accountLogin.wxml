@@ -1,0 +1,21 @@
+<!--pages/usercenter/accountLogin/accountLogin.wxml-->
+<!-- 父容器 -->
+<view class="container">
+  <!-- 子容器 -->
+  <view class="form-box">
+    <view class="form-item">
+      <!-- 账号 -->
+      <input class="username" focus="true" placeholder="账号" value="{{username}}" bindinput="usernameInput"/>
+    </view>
+    <view class="form-item">
+      <!-- 密码 -->
+      <input class="password" placeholder="密码" password="true" value="{{password}}" bindinput="passwordInput"/>
+    </view>
+    <button class="btn-login" bindtap="getAccountLogin">登录</button>
+    <view class="navigator-box">
+      <navigator class="register" url="../accountRegister/accountRegister" >账号注册</navigator>
+      <navigator class="resetPassword" url="../resetPassword/resetPassword" >找回密码</navigator>
+    </view>
+
+  </view>
+</view>

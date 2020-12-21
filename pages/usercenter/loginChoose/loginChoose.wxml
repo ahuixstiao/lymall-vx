@@ -1,0 +1,9 @@
+<!--pages/usercenter/loginChoose/loginChoose.wxml-->
+<!-- 父容器 -->
+<view class="container">
+  <!-- 子容器 -->
+  <view class="login-box">
+    <button class="vxLogin-btn" type="primary">微信登录</button>
+    <button class="accountLogin-btn" bindtap="accountLogin">账号登录</button>
+  </view>
+</view>

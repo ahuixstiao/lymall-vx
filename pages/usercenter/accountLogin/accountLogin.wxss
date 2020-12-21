@@ -1,0 +1,81 @@
+/* pages/usercenter/accountLogin/accountLogin.wxss */
+.form-box {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 0 40rpx;
+  margin-top: 200rpx;
+  background: #fff;
+}
+
+.form-item {
+  position: relative;
+  background: #fff;
+  height: 96rpx;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.form-item .username,
+.form-item .password,
+.form-item .code {
+  position: absolute;
+  top: 26rpx;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 44rpx;
+  background: #fff;
+  color: #333;
+  font-size: 30rpx;
+}
+
+.btn-login {
+  margin: 60rpx 0 40rpx 0;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 30rpx;
+  border-radius: 6rpx;
+  width: 90%;
+  color: #fff;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: flex;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin-left: 5%;
+  text-align: center;
+  /* padding-left: -5rpx; */
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  letter-spacing: 3rpx;
+  background: #7E89FE;
+}
+
+/* navigator-box样式 */
+.navigator-box {
+  height: 100rpx;
+  width: 100%;
+}
+
+/* 注册的超链接样式 */
+.navigator-box .register {
+  display: block;
+  height: 45rpx;
+  float: left;
+  font-size: 35rpx;
+  color: #7E89FE;
+}
+
+/* 忘记密码的超链接样式 */
+.navigator-box .resetPassword {
+  display: block;
+  height: 45rpx;
+  float: right;
+  font-size: 35rpx;
+  color: #7E89FE;
+}

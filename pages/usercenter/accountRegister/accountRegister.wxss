@@ -1,0 +1,80 @@
+/* pages/usercenter/accountRegister/accountRegister.wxss */
+/* pages/usercenter/register/register.wxss */
+
+/* 父容器样式 */
+.form-box {
+   width: 100%;
+   height: auto;
+   overflow: hidden;
+   padding: 0 40rpx;
+   margin-top: 60;
+   background: #fff;
+ }
+ /* 子容器样式 */
+ .form-item {
+   position: relative;
+   background: #fff;
+   height: 100rpx;
+   border-bottom: 1px solid #d9d9d9;
+ }
+ /* 输入框样式 */
+ .form-item .username,
+ .form-item .password,
+ .form-item .rePassword,
+ .form-item .phoneNum,
+ .form-item .userNickname {
+   position: absolute;
+   top: 26rpx;
+   left: 0;
+   display: block;
+   width: 100%;
+   height: 44rpx;
+   background: #fff;
+   color: #333;
+   font-size: 35rpx;
+ }
+ /* 顶部view样式 */
+ .image-box {
+   background: linear-gradient(180deg, #7E89FE 27%, #3AB4FF);
+   background-color: #9880FE;
+   color: #f4f4f4;
+   display: flex;
+   align-items: center;
+   padding: 30rpx;
+   font-size: 28rpx;
+ }
+ /* 顶部图片样式 */
+ .image-box .userphoto-img {
+   height: 148rpx;
+   width: 148rpx;
+   align-items: center;
+   border-radius: 50%;
+   margin: 0 auto;
+ }
+/* 注册按钮样式 */
+ .register-btn {
+   margin: 60rpx 0 40rpx 0;
+   height: 96rpx;
+   line-height: 96rpx;
+   font-size: 30rpx;
+   border-radius: 6rpx;
+   width: 90%;
+   color: #fff;
+   right: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: flex;
+   bottom: 0;
+   left: 0;
+   padding: 0;
+   margin-left: 5%;
+   text-align: center;
+   /* padding-left: -5rpx; */
+   border-top-left-radius: 50rpx;
+   border-bottom-left-radius: 50rpx;
+   border-top-right-radius: 50rpx;
+   border-bottom-right-radius: 50rpx;
+   letter-spacing: 3rpx;
+   background: #7E89FE;
+ }
