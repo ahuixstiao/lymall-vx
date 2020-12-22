@@ -1,5 +1,5 @@
 var app = getApp();
-var api = require('../../config/api.js');
+var api = require('../../../config/api.js');
 
 Page({
   data: {

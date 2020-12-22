@@ -1,4 +1,4 @@
-const api = require("../../config/api");
+const api = require("../../../config/api");
 Page({
   data: {
     categoryPid:0,//查询各大商品分类

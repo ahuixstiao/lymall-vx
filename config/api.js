@@ -11,4 +11,5 @@ module.exports={
   AddressSave: WxApiRoot+"address/save",//添加收货地址
   IndexUrl:WxApiRoot+"home/index",//首页信息查询
   SearchIndex:WxApiRoot+"search/index",//搜索关键字
+  SearchResult:WxApiRoot+"search/result",//搜索结果
 }
