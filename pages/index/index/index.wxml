@@ -186,7 +186,7 @@
   <!-- 更多好物 -->
   <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
     <view class="h" wx:if="{{item.goodsList.length>0}}">
-      <text>{{item.goddsCategory}}</text>
+      <text>{{item.name}}</text>
     </view>
     <view class="b">
       <block wx:for="{{item.goodsList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">

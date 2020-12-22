@@ -93,7 +93,7 @@ Page({
           app.globalData.userInfo = null;
           //关闭所有页面，打开到应用内的某个页面
           wx.reLaunch({
-            url: '/pages/index/index',
+            url: '/pages/index/index/index',
           })
         }
       }
