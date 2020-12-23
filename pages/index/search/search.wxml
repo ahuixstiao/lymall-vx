@@ -18,7 +18,7 @@
         <van-icon bindtap="clearHistory" name="delete" class="icon"/>
       </view>
       <view class="b">
-        <view class="item" bindtap="onKeywordTap" data-keyword="{{item.keyword}}" wx:for="{{historyKeyword}}" wx:key="keyword" hover-class="navigator-hover">{{item.keyword}}</view>
+        <view class="item" bindtap="onKeywordTap" data-keyword="{{item.searchKeyword}}" wx:for="{{historyKeyword}}" wx:key="keyword" hover-class="navigator-hover">{{item.searchKeyword}}</view>
       </view>
     </view>
 
@@ -32,7 +32,7 @@
       </view>
     </view>
     <view class="shelper-list" wx:if="{{keyword}}">
-      <view class="item" hover-class="navigator-hover" wx:for="{{helpKeyword}}" wx:key="id" bindtap="onKeywordTap" data-keyword="{{item}}">{{item}}</view>
+      <view class="item" hover-class="navigator-hover" wx:for="{{helpKeyword}}" wx:key="id" bindtap="onKeywordTap" data-keyword="{{item.goodsName}}">{{item.goodsName}}</view>
     </view>
   </view>
   <!-- 排序类型 currentSortType -->
