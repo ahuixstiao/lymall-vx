@@ -144,11 +144,10 @@ Page({
       method: "POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success: function (result) {
-        console.log(result);
         that.setData({
           defaultKeyword: result.data.defaultKeyword, //默认关键字
           hotKeyword: result.data.hotKeyword.data.list, //热门关键字
-          historyKeyword: result.data.historyKeyword.data.list, //历史关键字 遗留 尚未解决userId传递
+          historyKeyword: result.data.historyKeyword.data.list, //历史关键字
         });
       }
     });
@@ -159,10 +158,10 @@ Page({
    */
   getGoodsList: function () {
     let that = this;
-    let keyword = this.data.keyword; //获取用户输入的关键字
-    let categoryId = this.data.categoryId; //获取用户选中的商品分类
-    let orderCloumn = this.data.currentSort; //根据用户选中的排序类型 发送相应的字段
-    let orderType = this.data.currentSortOrder; //获取排序方式
+    let keyword = this.data.keyword; //用户输入的关键字
+    let categoryId = this.data.categoryId; //用户选中的商品分类
+    let orderCloumn = this.data.currentSort; //用户选中的排序类型 发送相应的字段
+    let orderType = this.data.currentSortOrder; //排序方式
     //发送请求
     wx.request({
       url: api.SearchResult, //请求路径
@@ -178,11 +177,14 @@ Page({
         "content-type": "application/x-www-form-urlencoded"
       },
       success: function (result) {
+        console.log(result);
         that.setData({
           searchStatus: true,//将关键字模块隐藏
           categoryFilter: false,//显示排序方式选项
           goodsList: result.data.goodsList,//保存查询到的商品信息
+          filterCategory: result.data.goodsList.categoryId,//保存查询到的分类信息
         });
+        console.log(that.data.filterCategory);
         //查询成功并向历史关键字表插入一条记录
         that.setSearchHistoryKeyword(keyword);
       },
