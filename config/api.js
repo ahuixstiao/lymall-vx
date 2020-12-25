@@ -14,4 +14,5 @@ module.exports={
   SearchResult:WxApiRoot+"search/result",//搜索结果
   SearchHelper:WxApiRoot+"search/helper",//搜索帮助
   SearchClearHistory:WxApiRoot+"search/clearhistory", //搜索历史清除
+  SelectByGoodsIdFindGoods:WxApiRoot+"select/goods"//查询商品信息
 }

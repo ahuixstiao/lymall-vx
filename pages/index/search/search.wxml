@@ -58,7 +58,7 @@
     </view>
     <view class="cate-item">
       <view class="b">
-        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.goodsId}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
+        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/index/goods/goods?id={{iitem.goodsId}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
           <image class="img" src="{{iitem.goodsPicUrl}}" background-size="cover"></image>
           <text class="name">{{iitem.goodsName}}</text>
           <text class="price">￥{{iitem.goodsRetailPrice}}</text>
