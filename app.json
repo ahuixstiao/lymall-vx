@@ -3,6 +3,7 @@
     "pages/index/index/index",
     "pages/index/search/search",
     "pages/index/goods/goods",
+    "pages/index/checkout/checkout",
     "pages/logs/logs",
     "pages/usercenter/userindex/userindex",
     "pages/cart/cart",

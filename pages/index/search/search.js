@@ -177,14 +177,13 @@ Page({
         "content-type": "application/x-www-form-urlencoded"
       },
       success: function (result) {
-        console.log(result);
         that.setData({
           searchStatus: true,//将关键字模块隐藏
           categoryFilter: false,//显示排序方式选项
           goodsList: result.data.goodsList,//保存查询到的商品信息
-          filterCategory: result.data.goodsList.categoryId,//保存查询到的分类信息
+          filterCategory: result.data.filterCategory,//保存查询到的分类信息
         });
-        console.log(that.data.filterCategory);
+        console.log(result);
         //查询成功并向历史关键字表插入一条记录
         that.setSearchHistoryKeyword(keyword);
       },
