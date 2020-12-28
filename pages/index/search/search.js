@@ -3,12 +3,12 @@ var app = getApp();
 
 Page({
   data: {
-    searchStatus: false, //搜索框 状态 false显示热门、历史搜索 true不显示
+    searchStatus: false, //搜索状态 false未搜索 显示关键字 true已搜索 不显示关键字 
     categoryFilter: false, //按条件排序选项 false不显示 true显示排序选项
-
 
     goodsList: [], //商品信息
     filterCategory: [], //分类类型
+    categoryId: 0, //分类id
 
     keyword: "", //输入的关键字
     currentSortType: 'default', //排序类型 综合 default  价格 price 分类 category
@@ -22,7 +22,6 @@ Page({
 
     currentPage: 1, //当前页
     limit: 20, //页面信息条数
-    categoryId: 0 //分类id
   },
 
   /**
@@ -124,6 +123,43 @@ Page({
     this.getGoodsList();
   },
 
+  /**
+   * 选择分类事件
+   * 选中相应的商品分类时获取该分类的categoryId
+   * @param {*} event 
+   */
+  selectCategory: function (event) {
+    //获取用户选中的分类下标
+    let currentIndex =event.currentTarget.dataset.categoryIndex;
+    //将data中的分类信息保存
+    let filterCategory = this.data.filterCategory;
+    //声明一个变量保存用户选中的分类信息
+    let currentCategory = null;
+    //let key in xxx遍历目标的下标 
+    for (let key in filterCategory) {
+      //判断用户选中的是哪个分类下标
+      if (key == currentIndex) {
+        //设置分类 选中的状态为true
+        filterCategory[key].selected = true;
+        //保存选中的分类信息
+        currentCategory = filterCategory[key];
+      } else {
+        filterCategory[key].selected = false;
+      }
+    }
+
+    //将用户选中的分类id保存到data中
+    this.setData({
+      filterCategory: filterCategory,
+      categoryFilter: false,
+      categoryId: currentCategory.id,
+      page: 1,
+      goodsList: []
+    });
+    //查询商品信息
+    this.getGoodsList();
+  },
+
   //---------------------------------------------------请求----------------------------------------------------------
   
   /**
@@ -183,9 +219,13 @@ Page({
           goodsList: result.data.goodsList,//保存查询到的商品信息
           filterCategory: result.data.filterCategory,//保存查询到的分类信息
         });
-        console.log(result);
-        //查询成功并向历史关键字表插入一条记录
-        that.setSearchHistoryKeyword(keyword);
+
+        //若用户为登陆状态则向历史记录表添加关键字
+        if(app.globalData.hasLogin){
+          //查询成功并向历史关键字表插入一条记录
+          that.createSearchHistoryKeyword(keyword);
+        }
+        
       },
     });
 
@@ -194,16 +234,17 @@ Page({
   },
 
   /**
-   * 历史关键字添加请求
+   * 历史关键字添加
    * 根据用户输入的关键字插入到历史关键字记录表
    * 若已登录则插入到用户的历史记录下
    * @param {*} keyword 
    */
-  setSearchHistoryKeyword: function (keyword) {
+  createSearchHistoryKeyword: function (keyword) {
     let that=this;
     let userId=app.globalData.userInfo==null? 0 : app.globalData.userInfo.userId;
+
     wx.request({
-      url: api.SearchClearHistory,
+      url: api.SearchCreateHistory,
       data:{"keyword":keyword,"userId":userId},
       dataType:"json",
       method:"POST",
@@ -259,7 +300,6 @@ Page({
       }
     })
   },
-
   
   /**
    * 选择排序方式的点击事件
@@ -269,7 +309,9 @@ Page({
     let currentId = event.currentTarget.id;
     //选择分类时 按商品添加时间排序
     switch (currentId) {
+
       case 'categoryFilter':
+        //分类排序
         this.setData({
           categoryFilter: !this.data.categoryFilter,
           currentSortType: 'category',
@@ -277,7 +319,9 @@ Page({
           currentSortOrder: 'desc'
         });
         break;
+
       case 'priceSort':
+        //价格排序
         let tmpSortOrder = 'asc';
         if (this.data.currentSortOrder == 'asc') {
           tmpSortOrder = 'desc';
@@ -291,6 +335,7 @@ Page({
         //点击完成后发送查询商品信息请求
         this.getGoodsList();
         break;
+
       default:
         //综合排序
         this.setData({
@@ -300,31 +345,8 @@ Page({
           categoryFilter: false,
           categoryId: 0,
         });
+        //点击完成后发送查询商品信息请求
         this.getGoodsList();
     }
   },
-  
-  selectCategory: function (event) {
-    let currentIndex = event.target.dataset.categoryIndex;
-    let filterCategory = this.data.filterCategory;
-    let currentCategory = null;
-    for (let key in filterCategory) {
-      if (key == currentIndex) {
-        filterCategory[key].selected = true;
-        currentCategory = filterCategory[key];
-      } else {
-        filterCategory[key].selected = false;
-      }
-    }
-    this.setData({
-      filterCategory: filterCategory,
-      categoryFilter: false,
-      categoryId: currentCategory.id,
-      page: 1,
-      goodsList: []
-    });
-    //查询商品信息
-    this.getGoodsList();
-  },
-  
 })

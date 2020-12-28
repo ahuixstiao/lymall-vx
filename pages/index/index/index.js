@@ -42,7 +42,6 @@ Page({
             topics:result.data.data.topics.data.list,//专题精选
             floorGoods:result.data.data.floorGoods,//更多好物
           });
-          console.log(result);
         }
       }
     })
