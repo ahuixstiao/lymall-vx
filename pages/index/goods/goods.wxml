@@ -20,6 +20,7 @@
       </view>
     </view>
   </view>
+  
   <view class="section-nav section-attr" bindtap="switchAttrPop">
     <view class="t">{{checkedSpecText}}</view>
     <van-icon class="i" name="arrow" />

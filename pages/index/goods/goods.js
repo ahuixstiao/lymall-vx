@@ -1,5 +1,6 @@
 var app = getApp();
 var api = require('../../../config/api');
+var WxParse = require('../../../lib/wxParse/wxParse');
 
 Page({
   data: {
@@ -45,10 +46,6 @@ Page({
     }
     //执行查询商品信息方法
     this.getGoodsInfo();
-    //执行查询热门商品信息方法
-    this.getGoodsRelated();
-    //执行查询常见问题信息方法
-    this.getIssueInfo();
   },
 
   //获取常见问题信息
@@ -80,10 +77,13 @@ Page({
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success:function(result){
+        console.log(result)
         //保存商品信息
         var goods=result.data.goodsInfo.data;
         //将商品的详情图从字符串数组转换成json数组
         goods.goodsGallery=JSON.parse(result.data.goodsInfo.data.goodsGallery);
+        //使用wx.parse方法将参数中的html标签转换成wx标签 并可通过goodsDetail来调用转换后的参数
+        WxParse.wxParse("goodsDetail","html",goods.goodsDetail,that);
         
         that.setData({
           goods:goods,//保存商品信息
@@ -91,6 +91,10 @@ Page({
         });
         //查询品牌商信息
         that.getBrandInfo(goods.brandId);
+        //执行查询热门商品信息方法
+        that.getGoodsRelated();
+        //执行查询常见问题信息方法
+        that.getIssueInfo();
       }
     })
   },
