@@ -4,44 +4,18 @@
       <image src="{{item}}" background-size="cover"></image>
     </swiper-item>
   </swiper>
-  <!-- 分享 -->
-  <view class='goods_name'>
-    <view class='goods_name_left'>{{goods.name}}</view>
-    <view hidden="{{!canShare}}" class="goods_name_right" bindtap="shareFriendOrCircle">分享</view>
-  </view>
-  <view class="share-pop-box" hidden="{{!openShare}}">
-    <view class="share-pop">
-      <view class="close" bindtap="closeShare">
-        <van-icon class="icon" name="cross" />      
-      </view>
-      <view class='share-info'>
-        <button class="sharebtn" open-type="share" wx:if="{{!isGroupon}}">
-          <image class='sharebtn_image' src='/static/images/wechat.png'></image>
-          <view class='sharebtn_text'>分享给好友</view>
-        </button>
-        <button  class="savesharebtn" open-type="openSetting" bindopensetting="handleSetting" wx:if="{{(!isGroupon) && (!canWrite)}}" >
-          <image class='sharebtn_image' src='/static/images/friend.png'></image>
-          <view class='sharebtn_text'>生成海报</view>
-        </button>
-        <button class="savesharebtn" bindtap="saveShare" wx:if="{{!isGroupon && canWrite}}">
-          <image class='sharebtn_image' src='/static/images/friend.png'></image>
-          <view class='sharebtn_text'>生成海报</view>
-        </button>
-      </view>
-    </view>
-  </view>
-
+  <!-- 商品价格 -->
   <view class="goods-info">
     <view class="c">
-      <text class="desc">{{goods.brief}}</text>
+      <text class="desc">{{goods.goodsBrief}}</text>
       <view class="price">
-        <view class="counterPrice">原价：￥{{goods.counterPrice}}</view>
-        <view class="retailPrice">现价：￥{{checkedSpecPrice}}</view>
+        <view class="counterPrice">原价：￥{{goods.goodsCounterPrice}}</view>
+        <view class="retailPrice">现价：￥{{goods.goodsRetailPrice}}</view>
       </view>
-
-      <view class="brand" wx:if="{{brand.name}}">
-        <navigator url="../brandDetail/brandDetail?id={{brand.id}}">
-          <text>{{brand.name}}</text>
+      <!-- 品牌商信息 -->
+      <view class="brand" wx:if="{{brand.brandName}}">
+        <navigator url="../brandDetail/brandDetail?id={{brand.brandId}}">
+          <text>{{brand.brandName}}</text>
         </navigator>
       </view>
     </view>
@@ -50,6 +24,8 @@
     <view class="t">{{checkedSpecText}}</view>
     <van-icon class="i" name="arrow" />
   </view>
+
+  <!-- 评论 -->
   <view class="comments" wx:if="{{comment.count > 0}}">
     <view class="h">
       <navigator url="/pages/comment/comment?valueId={{goods.id}}&type=0">
@@ -82,21 +58,25 @@
       </view>
     </view>
   </view>
+
+  <!-- 商品参数 -->
   <view class="goods-attr">
     <view class="t">商品参数</view>
     <view class="l">
       <view class="item" wx:for="{{attribute}}" wx:key="name">
         <text class="left">{{item.attribute}}</text>
-        <text class="right">{{item.value}}</text>
+        <text class="right">{{item.goodsAttributeValue}}</text>
       </view>
     </view>
   </view>
 
+  <!-- 商品详情图片介绍 -->
   <view class="detail">
     <import src="/lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
   </view>
 
+  <!-- 常见问题 -->
   <view class="common-problem">
     <view class="h">
       <view class="line"></view>
@@ -132,11 +112,12 @@
     </view>
   </view>
 </view>
+
 <!-- 规格选择界面 -->
 <view class="attr-pop-box" hidden="{{!openAttr}}">
   <view class="attr-pop">
     <view class="close" bindtap="closeAttr">
-      <van-icon  class="icon" name="cross" />      
+      <van-icon class="icon" name="cross" />
     </view>
     <view class="img-info">
       <image class="img" src="{{tmpPicUrl}}"></image>
@@ -153,26 +134,21 @@
       <view class="spec-item" wx:for="{{specificationList}}" wx:key="name">
         <view class="name">{{item.name}}</view>
         <view class="values">
-          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.valueList}}" wx:for-item="vitem" wx:key="id" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">{{vitem.value}}</view>
-        </view>
-      </view>
-
-      <view class="spec-item" wx:if="{{groupon.length > 0}}">
-        <view class="name">团购立减</view>
-        <view class="values">
-          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickGroupon" wx:for="{{groupon}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">￥{{vitem.discount}} ({{vitem.discountMember}}人)</view>
+          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.valueList}}"
+            wx:for-item="vitem" wx:key="id" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">
+            {{vitem.value}}</view>
         </view>
       </view>
 
       <!-- 数量 -->
-      <view class="number-item">
-        <view class="name">数量</view>
+    <view class="number-item">
+      <view class="name">数量</view>
         <view class="selnum">
           <view class="cut" bindtap="cutNumber">-</view>
           <input value="{{number}}" class="number" disabled="true" type="number" />
           <view class="add" bindtap="addNumber">+</view>
-        </view>
       </view>
+    </view>
 
     </view>
   </view>
@@ -187,8 +163,8 @@
 <!-- 底部按钮 -->
 <view class="bottom-btn">
   <view class="l l-collect" bindtap="addCollectOrNot" wx:if="{{!isGroupon}}">
-    <van-icon class="icon" name="star" color="#ab956d" wx:if="{{collect}}"/>
-    <van-icon class="icon" name="star-o" wx:else/>
+    <van-icon class="icon" name="star" color="#ab956d" wx:if="{{collect}}" />
+    <van-icon class="icon" name="star-o" wx:else />
   </view>
   <view class="l l-cart" wx:if="{{!isGroupon}}">
     <view class="box">

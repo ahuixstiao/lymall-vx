@@ -17,4 +17,5 @@ module.exports={
   SearchClearHistory:WxApiRoot+"search/clearhistory", //搜索历史清除
   SelectByGoodsIdFindGoods:WxApiRoot+"select/goods",//查询商品信息
   SelectByPopularProduct:WxApiRoot+"select/hotgoodsinfo",//查询热门商品信息
+  SelectByBrandIdFindInfo:WxApiRoot+"select/BrandInfo",//查询品牌信息
 }

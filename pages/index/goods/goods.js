@@ -4,7 +4,7 @@ var api = require('../../../config/api');
 Page({
   data: {
     canShare: false,
-    id: 0,
+    goodsId: 0,//商品id
     goods: {},//商品信息
     attribute: [],//商品参数
     issueList: [],//常见问题
@@ -30,11 +30,17 @@ Page({
     limit: 10,
   },
 
+  onShow: function() {
+    // 页面显示
+    var that = this;
+    
+  },
+
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     if (options.id) {
       this.setData({
-        id: parseInt(options.id),//转为int类型并保存到data中
+        goodsId: parseInt(options.id),//转为int类型并保存到data中
       });
     }
     //执行查询商品信息方法
@@ -55,7 +61,6 @@ Page({
       header:{"content-type": "application/x-www-form-urlencoded"},
       dataType:"json",
       success:function(result){
-        console.log(result)
         that.setData({
           issueList:result.data.data.list,
         });
@@ -63,20 +68,48 @@ Page({
     })
   },
 
-  // 获取商品信息
+  /**
+   * 发送获取商品信息请求
+   */
   getGoodsInfo: function() {
     let that = this;
     wx.request({
       url: api.SelectByGoodsIdFindGoods,
-      data:{"goodsId":that.data.id},
+      data:{"goodsId":that.data.goodsId},
       dataType:"json",
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success:function(result){
-        var goods=result.data.data;
-        goods.goodsGallery=JSON.parse(result.data.data.goodsGallery);
+        //保存商品信息
+        var goods=result.data.goodsInfo.data;
+        //将商品的详情图从字符串数组转换成json数组
+        goods.goodsGallery=JSON.parse(result.data.goodsInfo.data.goodsGallery);
+        
         that.setData({
           goods:goods,//保存商品信息
+          attribute:result.data.goodsAttribute.data//保存商品参数信息
+        });
+        //查询品牌商信息
+        that.getBrandInfo(goods.brandId);
+      }
+    })
+  },
+
+  /**
+   * 根据商品的brandId发送请求查询商品的品牌商信息
+   * @param {*} brandId 
+   */
+  getBrandInfo:function(brandId){
+    let that=this;
+    wx.request({
+      url: api.SelectByBrandIdFindInfo,
+      data:{"brandId":brandId},
+      dataType:"json",
+      method:"POST",
+      header:{"content-type":"application/x-www-form-urlencoded"},
+      success:function(result){
+        that.setData({
+          brand:result.data.data
         });
       }
     })
@@ -247,13 +280,6 @@ Page({
     });
   },
 
-  
-  onShow: function() {
-    // 页面显示
-    var that = this;
-   
-  },
-
   //添加或是取消收藏
   addCollectOrNot: function() {
     let that = this;
@@ -334,19 +360,13 @@ Page({
       number: (this.data.number - 1 > 1) ? this.data.number - 1 : 1
     });
   },
+
   addNumber: function() {
     this.setData({
       number: this.data.number + 1
     });
   },
-  onHide: function() {
-    // 页面隐藏
 
-  },
-  onUnload: function() {
-    // 页面关闭
-
-  },
   switchAttrPop: function() {
     if (this.data.openAttr == false) {
       this.setData({
@@ -354,24 +374,22 @@ Page({
       });
     }
   },
+
   closeAttr: function() {
     this.setData({
       openAttr: false,
     });
   },
+
   closeShare: function() {
     this.setData({
       openShare: false,
     });
   },
+
   openCartPage: function() {
     wx.switchTab({
       url: '/pages/cart/cart'
     });
   },
-  onReady: function() {
-    // 页面渲染完成
-
-  }
-
 })
