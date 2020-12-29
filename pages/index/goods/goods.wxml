@@ -103,13 +103,13 @@
       <text class="title">常见问题</text>
     </view>
     <view class="b">
-      <view class="item" wx:for="{{issueList}}" wx:key="id">
+      <view class="item" wx:for="{{issueList}}" wx:key="issueId">
         <view class="question-box">
           <text class="spot"></text>
-          <text class="question">{{item.question}}</text>
+          <text class="question">{{item.issueQuestion}}</text>
         </view>
         <view class="answer">
-          {{item.answer}}
+          {{item.issueAnswer}}
         </view>
       </view>
     </view>
@@ -122,11 +122,11 @@
       <text class="title">大家都在看</text>
     </view>
     <view class="b">
-      <view class="item" wx:for="{{relatedGoods}}" wx:key="id">
-        <navigator url="/pages/goods/goods?id={{item.id}}">
-          <image class="img" src="{{item.picUrl}}" background-size="cover"></image>
-          <text class="name">{{item.name}}</text>
-          <text class="price">￥{{item.retailPrice}}</text>
+      <view class="item" wx:for="{{relatedGoods}}" wx:key="goodsId">
+        <navigator url="/pages/index/goods/goods?id={{item.goodsId}}">
+          <image class="img" src="{{item.goodsPicUrl}}" background-size="cover"></image>
+          <text class="name">{{item.goodsName}}</text>
+          <text class="price">￥{{item.goodsRetailPrice}}</text>
         </navigator>
       </view>
     </view>

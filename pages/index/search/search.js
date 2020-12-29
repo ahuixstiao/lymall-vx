@@ -124,7 +124,7 @@ Page({
   },
 
   /**
-   * 选择分类事件
+   * 选择查询的商品分类排序事件
    * 选中相应的商品分类时获取该分类的categoryId
    * @param {*} event 
    */
@@ -133,7 +133,7 @@ Page({
     let currentIndex =event.currentTarget.dataset.categoryIndex;
     //将data中的分类信息保存
     let filterCategory = this.data.filterCategory;
-    //声明一个变量保存用户选中的分类信息
+    //保存用户选中的分类
     let currentCategory = null;
     //let key in xxx遍历目标的下标 
     for (let key in filterCategory) {
@@ -147,14 +147,12 @@ Page({
         filterCategory[key].selected = false;
       }
     }
-
     //将用户选中的分类id保存到data中
     this.setData({
-      filterCategory: filterCategory,
-      categoryFilter: false,
-      categoryId: currentCategory.id,
-      page: 1,
-      goodsList: []
+      filterCategory: filterCategory,//将分类选项保存 防止用户点击分类后只显示一个分类
+      categoryFilter: false, //设置排序选项 隐藏
+      categoryId: currentCategory.categoryId,//将用户选中的catogoryId保存到data
+      goodsList:[],//清空原有商品信息
     });
     //查询商品信息
     this.getGoodsList();
@@ -194,9 +192,9 @@ Page({
    */
   getGoodsList: function () {
     let that = this;
-    let keyword = this.data.keyword; //用户输入的关键字
-    let categoryId = this.data.categoryId; //用户选中的商品分类
-    let orderCloumn = this.data.currentSort; //用户选中的排序类型 发送相应的字段
+    let keyword = this.data.keyword; //输入的关键字
+    let categoryId = this.data.categoryId; //选中的商品分类
+    let orderCloumn = this.data.currentSort; //排序字段
     let orderType = this.data.currentSortOrder; //排序方式
     //发送请求
     wx.request({
@@ -228,7 +226,6 @@ Page({
         
       },
     });
-
     //重新获取关键词 防止用户搜索后历史记录无法同步显示
     that.getSearchKeyword();
   },
@@ -251,7 +248,7 @@ Page({
       header:{"content-type":"application/x-www-form-urlencoded"},
       success:function(result){
         //插入成功后查询一次关键字
-        if(result.data.errno==0){
+        if(result.data.errno===0){
           that.getSearchKeyword();
         }
       }
@@ -306,17 +303,17 @@ Page({
    * @param {*} event 
    */
   openSortFilter: function (event) {
-    let currentId = event.currentTarget.id;
-    //选择分类时 按商品添加时间排序
+    let currentId =event.currentTarget.id;
+    //选择排序方式
     switch (currentId) {
-
       case 'categoryFilter':
         //分类排序
         this.setData({
           categoryFilter: !this.data.categoryFilter,
           currentSortType: 'category',
           currentSort: 'goods_add_time',
-          currentSortOrder: 'desc'
+          currentSortOrder: 'desc',
+          categoryId:currentId
         });
         break;
 

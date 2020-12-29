@@ -67,7 +67,7 @@ Page({
     let that=this;
     wx.request({
       url:api.IssueList,
-      data:{"currentPage":currentPage,"limitData":limit},
+      data:{"currentPage":currentPage,"limit":limit},
       method:"POST",
       header:{"content-type":"application/x-www-form-urlencoded"},
       dataType:"json",

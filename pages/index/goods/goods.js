@@ -5,16 +5,14 @@ Page({
   data: {
     canShare: false,
     id: 0,
-    goods: {},
-    groupon: [], //该商品支持的团购规格
-    grouponLink: {}, //参与的团购
-    attribute: [],
-    issueList: [],
-    comment: [],
-    brand: {},
-    specificationList: [],
+    goods: {},//商品信息
+    attribute: [],//商品参数
+    issueList: [],//常见问题
+    comment: [],//评论
+    brand: {},//品牌商
+    specificationList: [],//规格列表
     productList: [],
-    relatedGoods: [],
+    relatedGoods: [],//推荐商品信息
     cartGoodsCount: 0,
     userHasCollect: 0,
     number: 1,
@@ -26,82 +24,41 @@ Page({
     openShare: false,
     collect: false,
     shareImage: '',
-    isGroupon: false, //标识是否是一个参团购买
     soldout: false,
-    canWrite: false, //用户是否获取了保存相册的权限
+
+    currentPage: 1,
+    limit: 10,
   },
 
-  // 页面分享
-  onShareAppMessage: function() {
-    let that = this;
-    return {
-      title: that.data.goods.name,
-      desc: '唯爱与美食不可辜负',
-      path: '/pages/index/index?goodId=' + this.data.id
-    }
-  },
- //分享
-  shareFriendOrCircle: function() {
-    //var that = this;
-    if (this.data.openShare === false) {
+  onLoad: function(options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    if (options.id) {
       this.setData({
-        openShare: !this.data.openShare
+        id: parseInt(options.id),//转为int类型并保存到data中
       });
-    } else {
-      return false;
     }
+    //执行查询商品信息方法
+    this.getGoodsInfo();
+    //执行查询热门商品信息方法
+    this.getGoodsRelated();
+    //执行查询常见问题信息方法
+    this.getIssueInfo();
   },
-  handleSetting: function(e) {
-      var that = this;
-      // console.log(e)
-      if (!e.detail.authSetting['scope.writePhotosAlbum']) {
-          wx.showModal({
-              title: '警告',
-              content: '不授权无法保存',
-              showCancel: false
-          })
-          that.setData({
-              canWrite: false
-          })
-      } else {
-          wx.showToast({
-              title: '保存成功'
-          })
-          that.setData({
-              canWrite: true
-          })
-      }
-  },
-  // 保存分享图
-  saveShare: function() {
-    let that = this;
-    wx.downloadFile({
-      url: that.data.shareImage,
-      success: function(res) {
-        console.log(res)
-        wx.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,
-          success: function(res) {
-            wx.showModal({
-              title: '生成海报成功',
-              content: '海报已成功保存到相册，可以分享到朋友圈了',
-              showCancel: false,
-              confirmText: '好的',
-              confirmColor: '#a78845',
-              success: function(res) {
-                if (res.confirm) {
-                  console.log('用户点击确定');
-                }
-              }
-            })
-          },
-          fail: function(res) {
-            console.log('fail')
-          }
-        })
-      },
-      fail: function() {
-        console.log('fail')
+
+  //获取常见问题信息
+  getIssueInfo:function(){
+    let that=this;
+    wx.request({
+      url: api.IssueList,
+      data:{"currentPage":that.data.currentPage,"limit":that.data.limit},
+      method:"POST",
+      header:{"content-type": "application/x-www-form-urlencoded"},
+      dataType:"json",
+      success:function(result){
+        console.log(result)
+        that.setData({
+          issueList:result.data.data.list,
+        });
       }
     })
   },
@@ -116,14 +73,11 @@ Page({
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success:function(result){
-        console.log(result);
-        var goods=result.data.goods.data;
-        goods.goodsGaller=JSON.parse(result.data.goods.data.goodsGallery);
+        var goods=result.data.data;
+        goods.goodsGallery=JSON.parse(result.data.data.goodsGallery);
         that.setData({
-          goods:goods,
-          
+          goods:goods,//保存商品信息
         });
-        
       }
     })
   },
@@ -131,37 +85,18 @@ Page({
   // 获取推荐商品
   getGoodsRelated: function() {
     let that = this;
-    
-  },
-
-  // 团购选择
-  clickGroupon: function(event) {
-    let that = this;
-
-    //参与团购，不可更改选择
-    if (that.data.isGroupon) {
-      return;
-    }
-
-    let specName = event.currentTarget.dataset.name;
-    let specValueId = event.currentTarget.dataset.valueId;
-
-    let _grouponList = this.data.groupon;
-    for (let i = 0; i < _grouponList.length; i++) {
-      if (_grouponList[i].id == specValueId) {
-        if (_grouponList[i].checked) {
-          _grouponList[i].checked = false;
-        } else {
-          _grouponList[i].checked = true;
-        }
-      } else {
-        _grouponList[i].checked = false;
+    wx.request({
+      url: api.SelectByPopularProduct,
+      data:{"currentPage":that.data.currentPage,"limit":that.data.limit},
+      dataType:"json",
+      method:"POST",
+      header:{"content-type":"application/x-www-form-urlencoded"},
+      success:function(result){
+        that.setData({
+          relatedGoods:result.data.data.list
+        });
       }
-    }
-
-    this.setData({
-      groupon: _grouponList,
-    });
+    })
   },
 
   // 规格选择
@@ -197,19 +132,6 @@ Page({
     this.changeSpecInfo();
 
     //重新计算哪些值不可以点击
-  },
-
-  //获取选中的团购信息
-  getCheckedGrouponValue: function() {
-    let checkedValues = {};
-    let _grouponList = this.data.groupon;
-    for (let i = 0; i < _grouponList.length; i++) {
-      if (_grouponList[i].checked) {
-        checkedValues = _grouponList[i];
-      }
-    }
-
-    return checkedValues;
   },
 
   //获取选中的规格信息
@@ -325,16 +247,7 @@ Page({
     });
   },
 
-  onLoad: function(options) {
-    // 页面初始化 options为页面跳转所带来的参数
-    if (options.id) {
-      this.setData({
-        id: parseInt(options.id),//转为int类型并保存到data中
-      });
-    }
-    //执行查询商品信息方法
-    this.getGoodsInfo();
-  },
+  
   onShow: function() {
     // 页面显示
     var that = this;
