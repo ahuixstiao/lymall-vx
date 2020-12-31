@@ -29,7 +29,7 @@
       </view>
       <view class="user_column_item" bindtap="receive">
         <!-- 待收货 -->
-        <image class="user_column_item_image" src="/static/images/receive.png/"/>
+        <image class="user_column_item_image" src="/static/images/receive.png"/>
         <view class="user_column_item_text">待收货</view>
       </view>
       <view class="user_column_item" bindtap="comment">

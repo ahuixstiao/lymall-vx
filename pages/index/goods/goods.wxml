@@ -1,9 +1,16 @@
 <view class="container">
   <swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <!-- 商品轮播图片 -->
     <swiper-item wx:for="{{goods.goodsGallery}}" wx:key="*this">
       <image src="{{item}}" background-size="cover"></image>
     </swiper-item>
   </swiper>
+
+  <!-- 商品名称 -->
+  <view class='goods_name'>
+    <view class='goods_name_left'>{{goods.goodsName}}</view>
+  </view>
+
   <!-- 商品价格 -->
   <view class="goods-info">
     <view class="c">
@@ -20,17 +27,18 @@
       </view>
     </view>
   </view>
-  
+
+  <!-- 规格数量选择容器 -->
   <view class="section-nav section-attr" bindtap="switchAttrPop">
     <view class="t">{{checkedSpecText}}</view>
     <van-icon class="i" name="arrow" />
   </view>
 
   <!-- 评论 -->
-  <view class="comments" wx:if="{{comment.count > 0}}">
+  <view class="comments" wx:if="{{comment.length > 0}}">
     <view class="h">
-      <navigator url="/pages/comment/comment?valueId={{goods.id}}&type=0">
-        <text class="t">评价({{comment.count > 999 ? '999+' : comment.count}})</text>
+      <navigator url="/pages/index/comment/comment?valueId={{comment.commentValueId}}&type=0">
+        <text class="t">评价({{comment.length >5  ? '99+' : comment.length}})</text>
         <view class="i">
           查看全部
           <van-icon name="arrow" />
@@ -38,23 +46,27 @@
       </navigator>
     </view>
     <view class="b">
-      <view class="item" wx:for="{{comment.data}}" wx:key="id">
+      <view class="item" wx:for="{{comment}}" wx:key="commentId">
         <view class="info">
           <view class="user">
-            <image src="{{item.avatar}}"></image>
-            <text>{{item.nickname}}</text>
+            <!-- 用户头像 -->
+            <image src="{{item.userAvatar}}"></image>
+            <!-- 用户昵称 -->
+            <text>{{item.userNickname}}</text>
+            <!-- 评价时间 -->
           </view>
-          <view class="time">{{item.addTime}}</view>
+          <view class="time">{{item.commentAddTime}}</view>
         </view>
         <view class="content">
-          {{item.content}}
+          <!-- 评价 -->
+          {{item.commentContent}}
         </view>
-        <view class="imgs" wx:if="{{item.picList.length > 0}}">
-          <image class="img" wx:for="{{item.picList}}" wx:key="*this" wx:for-item="iitem" src="{{iitem}} "></image>
+        <view class="imgs" wx:if="{{item.PicUrls.length > 0}}">
+          <image class="img" wx:for="{{item.PicUrls}}" wx:key="*this" wx:for-item="iitem" src="{{iitem}} "></image>
         </view>
-        <view class="customer-service" wx:if="{{item.adminContent}}">
+        <view class="customer-service" wx:if="{{item.commentAdminContent}}">
           <text class="u">商家回复：</text>
-          <text class="c">{{item.adminContent}}</text>
+          <text class="c">{{item.commentAdminContent}}</text>
         </view>
       </view>
     </view>

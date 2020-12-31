@@ -72,7 +72,7 @@ Page({
     let that = this;
     wx.request({
       url: api.SelectByGoodsIdFindGoods,
-      data:{"goodsId":that.data.goodsId},
+      data:{"goodsId":that.data.goodsId,"userId":app.globalData.userInfo.userId},
       dataType:"json",
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
@@ -84,10 +84,10 @@ Page({
         goods.goodsGallery=JSON.parse(result.data.goodsInfo.data.goodsGallery);
         //使用wx.parse方法将参数中的html标签转换成wx标签 并可通过goodsDetail来调用转换后的参数
         WxParse.wxParse("goodsDetail","html",goods.goodsDetail,that);
-        
         that.setData({
           goods:goods,//保存商品信息
-          attribute:result.data.goodsAttribute.data//保存商品参数信息
+          attribute:result.data.goodsAttribute.data,//保存商品参数信息
+          comment:result.data.comment.data.list//保存评价信息
         });
         //查询品牌商信息
         that.getBrandInfo(goods.brandId);
