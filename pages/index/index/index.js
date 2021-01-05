@@ -29,6 +29,7 @@ Page({
       method: "POST",
       header: {"content-type":"application/x-www-form-urlencoded"},
       success:function(result){
+        console.log(result)
         if(result.data.errno==0){
           that.setData({
             goodsCount:result.data.data.goodsCount,//商品总数

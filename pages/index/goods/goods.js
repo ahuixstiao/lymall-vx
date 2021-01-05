@@ -70,14 +70,15 @@ Page({
    */
   getGoodsInfo: function() {
     let that = this;
+    let userId=app.globalData.userInfo!=null?app.globalData.userInfo.userId:""
     wx.request({
       url: api.SelectByGoodsIdFindGoods,
-      data:{"goodsId":that.data.goodsId,"userId":app.globalData.userInfo.userId},
+      data:{"goodsId":that.data.goodsId,"userId":userId},
       dataType:"json",
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success:function(result){
-        console.log(result)
+        console.log(result);
         //保存商品信息
         var goods=result.data.goodsInfo.data;
         //将商品的详情图从字符串数组转换成json数组
@@ -87,7 +88,8 @@ Page({
         that.setData({
           goods:goods,//保存商品信息
           attribute:result.data.goodsAttribute.data,//保存商品参数信息
-          comment:result.data.comment.data.list//保存评价信息
+          comment:result.data.comment.data.list,//保存评价信息
+          specificationList:result.data.specificationList.data,//保存商品规格
         });
         //查询品牌商信息
         that.getBrandInfo(goods.brandId);

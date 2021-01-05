@@ -18,4 +18,7 @@ module.exports={
   SelectByGoodsIdFindGoods:WxApiRoot+"select/goods",//查询商品信息
   SelectByPopularProduct:WxApiRoot+"select/hotgoodsinfo",//查询热门商品信息
   SelectByBrandIdFindInfo:WxApiRoot+"select/BrandInfo",//查询品牌信息
+  BrandList:WxApiRoot+"brand/list",//查询品牌商信息
+  BrandDetail:WxApiRoot+"brand/detail",//查询品牌商详情
+  BrandFindGoodsList:WxApiRoot+"brand/goodslist",//查询品牌商下的商品
 }

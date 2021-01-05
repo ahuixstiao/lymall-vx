@@ -12,7 +12,7 @@ Page({
    */
   onShow: function () {
     //直接修改 this.data 而不调用 this.setData 是无法改变页面的状态的
-    if (this.data.hashLogin) { //根据全局js保存的登录状态来进行判断是否登录
+    if (app.globalData.hasLogin) { //根据全局js保存的登录状态来进行判断是否登录
       //获取昵称 获取头像 获取登录状态
       this.setData({
         username: app.globalData.userInfo.userNickname,
@@ -34,7 +34,7 @@ Page({
    */
   loginChoose: function () {
     //判断登录状态 
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到个人详细信息 遗留------
       
     } else {
@@ -79,7 +79,7 @@ Page({
 
   //浏览足迹跳转
   browseFootprint:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转浏览足迹页面
       wx.reLaunch({
         url: '/pages/coreservices/browseFootprint/browseFootprint',
@@ -99,7 +99,7 @@ Page({
 
   //待付款页面跳转
   pendpay:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到待付款页面
       wx.reLaunch({
         url: '',
@@ -119,7 +119,7 @@ Page({
 
   //待发货页面跳转
   send:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到代发货页面
       wx.reLaunch({
         url: '',
@@ -139,7 +139,7 @@ Page({
 
   //待收货页面跳转
   receive:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到待收货页面
       wx.reLaunch({
         url: '',
@@ -159,7 +159,7 @@ Page({
 
   //待评价页面跳转
   comment:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到待评价页面
       wx.reLaunch({
         url: '',
@@ -179,7 +179,7 @@ Page({
 
   //售后页面跳转
   aftersale:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到售后页面
       wx.reLaunch({
         url: '',
@@ -199,7 +199,7 @@ Page({
 
   //地址管理页面跳转
   address:function () {
-    if (this.data.hashLogin) {
+    if (app.globalData.hasLogin) {
       //已登录则跳转到地址管理界面
       wx.reLaunch({
         url: '/pages/coreservices/addressManagement/addressManagement',
@@ -216,5 +216,4 @@ Page({
       })
     }
   },
-
 })
