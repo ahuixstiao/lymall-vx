@@ -21,4 +21,6 @@ module.exports={
   BrandList:WxApiRoot+"brand/list",//查询品牌商信息
   BrandDetail:WxApiRoot+"brand/detail",//查询品牌商详情
   BrandFindGoodsList:WxApiRoot+"brand/goodslist",//查询品牌商下的商品
+  CatalogList:WxApiRoot+"catalog/index",//查询分类目录
+  CatalogCurrentCategory:WxApiRoot+"catalog/currentCategory",//查询当前选中的父分类的子分类信息
 }

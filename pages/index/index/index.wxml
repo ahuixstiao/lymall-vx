@@ -22,7 +22,7 @@
   </swiper>
   <!-- 分类菜单 -->
   <view class="m-menu">
-    <navigator class="item" url="/pages/category/category?id={{item.categoryId}}" wx:for="{{channel}}" wx:key="id">
+    <navigator class="item" url="/pages/catalog/category/category?id={{item.categoryId}}" wx:for="{{channel}}" wx:key="id">
       <image src="{{item.categoryIconUrl}}" background-size="cover"></image>
       <text>{{item.categoryName}}</text>
     </navigator>
@@ -185,22 +185,22 @@
   </view>
   <!-- 更多好物 -->
   <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
-    <view class="h" wx:if="{{item.goodsList.length>0}}">
+    <view class="h" wx:if="{{item.goodsList.data.list.length>0}}">
       <text>{{item.name}}</text>
     </view>
     <view class="b">
-      <block wx:for="{{item.goodsList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
+      <block wx:for="{{item.goodsList.data.list}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
         <view class="item {{iindex % 2 == 0 ? '' : 'item-b'}}">
           <navigator url="../goods/goods?id={{iitem.goodsId}}" class="a">
             <image class="img" src="{{iitem.goodsPicUrl}}" background-size="cover"></image>
-            <text class="name">{{iitem.categoryName}}</text>
+            <text class="name">{{iitem.goodsName}}</text>
             <text class="price">￥{{iitem.goodsRetailPrice}}</text>
           </navigator>
         </view>
       </block>
     </view>
     <navigator url="/pages/category/category?id={{item.categoryId}}" class="t" wx:if="{{item.goodsList.length>0}}">
-      <view class="txt">{{'更多'+item.goddsCategory+'好物 >'}}</view>
+      <view class="txt">{{'更多'+item.name+'好物 >'}}</view>
     </navigator>
   </view>
 </view>

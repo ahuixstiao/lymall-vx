@@ -8,7 +8,8 @@
     "pages/index/brandDetail/brandDetail",
     "pages/logs/logs",
     "pages/cart/cart",
-    "pages/catelog/catelog",
+    "pages/catalog/catalog/catalog",
+    "pages/catalog/catagory/catagory",
     "pages/essentialTools/helpcenter/helpcenter",
     "pages/coreservices/browseFootprint/browseFootprint",
     "pages/coreservices/addressManagement/addressManagement",
@@ -39,7 +40,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/catelog/catelog",
+        "pagePath": "pages/catalog/catalog/catalog",
         "iconPath": "static/images/category.png",
         "selectedIconPath": "static/images/category@selected.png",
         "text": "分类"
