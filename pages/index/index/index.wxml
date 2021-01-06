@@ -11,7 +11,7 @@
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="adId">
       <block wx:if="{{item.adLink>0}}">
-        <navigator url="/pages/goods/goods?id={{item.adLink}}">
+        <navigator url="/pages/index/goods/goods?id={{item.adLink}}">
           <image src="{{item.adUrl}}" background-size="cover"></image>
         </navigator>
       </block>

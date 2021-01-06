@@ -16,6 +16,7 @@ Page({
    * @param {*} options 
    */
   onLoad: function(options) {
+    
     this.getCatalog();
   },
   

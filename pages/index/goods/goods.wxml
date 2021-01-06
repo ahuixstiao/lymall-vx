@@ -133,10 +133,13 @@
       <van-icon class="icon" name="cross" />
     </view>
     <view class="img-info">
+      <!-- 商品图片 -->
       <image class="img" src="{{tmpPicUrl}}"></image>
       <view class="info">
         <view class="c">
+          <!-- 商品价格 -->
           <view class="p">价格：￥{{checkedSpecPrice}}</view>
+          <!-- 所选规格 -->
           <view class="a">{{tmpSpecText}}</view>
         </view>
       </view>
@@ -147,9 +150,9 @@
       <view class="spec-item" wx:for="{{specificationList}}" wx:key="name">
         <view class="name">{{item.name}}</view>
         <view class="values">
-          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.valueList}}"
-            wx:for-item="vitem" wx:key="id" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">
-            {{vitem.value}}</view>
+          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.goodsSpecifications}}"
+            wx:for-item="vitem" wx:key="id" data-value-id="{{vitem.goodsSpecificationId}}" data-name="{{vitem.goodsSpecificationValue}}">
+            {{vitem.goodsSpecificationValue}}</view>
         </view>
       </view>
 

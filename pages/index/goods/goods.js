@@ -16,11 +16,11 @@ Page({
     relatedGoods: [],//推荐商品信息
     cartGoodsCount: 0,
     userHasCollect: 0,
-    number: 1,
-    tmpPicUrl: '',
-    checkedSpecText: '规格数量选择',
+    number: 1,//商品数量
+    tmpPicUrl: '',//商品图片
+    checkedSpecPrice: 0,//所选商品价格
+    checkedSpecText: '规格数量选择',//商品详情页面默认显示的 商品规格数量等
     tmpSpecText: '请选择规格数量',
-    checkedSpecPrice: 0,
     openAttr: false,
     openShare: false,
     collect: false,
@@ -30,13 +30,10 @@ Page({
     currentPage: 1,
     limit: 10,
   },
-
-  onShow: function() {
-    // 页面显示
-    var that = this;
-    
-  },
-
+  /**
+   * 页面加载时
+   * @param {*} options 
+   */
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     if (options.id) {
@@ -80,16 +77,18 @@ Page({
       success:function(result){
         console.log(result);
         //保存商品信息
-        var goods=result.data.goodsInfo.data;
+        var goods=result.data.data.goodsInfo;
         //将商品的详情图从字符串数组转换成json数组
-        goods.goodsGallery=JSON.parse(result.data.goodsInfo.data.goodsGallery);
+        goods.goodsGallery=JSON.parse(result.data.data.goodsInfo.goodsGallery);
         //使用wx.parse方法将参数中的html标签转换成wx标签 并可通过goodsDetail来调用转换后的参数
         WxParse.wxParse("goodsDetail","html",goods.goodsDetail,that);
         that.setData({
           goods:goods,//保存商品信息
-          attribute:result.data.goodsAttribute.data,//保存商品参数信息
-          comment:result.data.comment.data.list,//保存评价信息
-          specificationList:result.data.specificationList.data,//保存商品规格
+          checkedSpecPrice:goods.goodsRetailPrice,//保存商品价格
+          tmpPicUrl:goods.goodsPicUrl,//保存商品图片
+          attribute:result.data.data.goodsAttribute,//保存商品参数信息
+          comment:result.data.data.comment.data.list,//保存评价信息
+          specificationList:result.data.data.specificationList,//保存商品规格
         });
         //查询品牌商信息
         that.getBrandInfo(goods.brandId);
@@ -141,32 +140,34 @@ Page({
   // 规格选择
   clickSkuValue: function(event) {
     let that = this;
-    let specName = event.currentTarget.dataset.name;
-    let specValueId = event.currentTarget.dataset.valueId;
-
-    //判断是否可以点击
-
     //TODO 性能优化，可在wx:for中添加index，可以直接获取点击的属性名和属性值，不用循环
-    let _specificationList = this.data.specificationList;
+    let specName = event.currentTarget.dataset.name;//保存当前选中的商品规格
+    let specValueId = event.currentTarget.dataset.valueId;//保存当前选中的商品规格id
+    let _specificationList = this.data.specificationList;//保存商品规格数组
+    //判断是否可以点击
     for (let i = 0; i < _specificationList.length; i++) {
-      if (_specificationList[i].name === specName) {
-        for (let j = 0; j < _specificationList[i].valueList.length; j++) {
-          if (_specificationList[i].valueList[j].id == specValueId) {
+      let _specName=_specificationList[i].goodsSpecifications[i].goodsSpecificationValue;
+      //判断用户是否选中商品规格
+      if (_specName == specName) {
+        for (let j = 0; j < _specificationList[i].goodsSpecifications.length; j++) {
+          if (_specificationList[i].goodsSpecifications[j].goodsSpecificationId == specValueId) {
             //如果已经选中，则反选
-            if (_specificationList[i].valueList[j].checked) {
-              _specificationList[i].valueList[j].checked = false;
+            if (_specificationList[i].goodsSpecifications[j].checked) {
+              _specificationList[i].goodsSpecifications[j].checked = false;
             } else {
-              _specificationList[i].valueList[j].checked = true;
+              _specificationList[i].goodsSpecifications[j].checked = true;
             }
           } else {
-            _specificationList[i].valueList[j].checked = false;
+            _specificationList[i].goodsSpecifications[j].checked = false;
           }
         }
       }
     }
+    //将选中状态返回
     this.setData({
       specificationList: _specificationList,
     });
+
     //重新计算spec改变后的信息
     this.changeSpecInfo();
 
@@ -179,14 +180,14 @@ Page({
     let _specificationList = this.data.specificationList;
     for (let i = 0; i < _specificationList.length; i++) {
       let _checkedObj = {
-        name: _specificationList[i].name,
+        name: _specificationList[i].goodsSpecifications.goodsSpecificationValue,
         valueId: 0,
         valueText: ''
       };
-      for (let j = 0; j < _specificationList[i].valueList.length; j++) {
-        if (_specificationList[i].valueList[j].checked) {
-          _checkedObj.valueId = _specificationList[i].valueList[j].id;
-          _checkedObj.valueText = _specificationList[i].valueList[j].value;
+      for (let j = 0; j < _specificationList[i].goodsSpecifications.length; j++) {
+        if (_specificationList[i].goodsSpecifications[j].checked) {
+          _checkedObj.valueId = _specificationList[i].goodsSpecifications[j].goodsSpecificationId;
+          _checkedObj.valueText = _specificationList[i].goodsSpecifications[j].goodsSpecificationValue;
         }
       }
       checkedValues.push(_checkedObj);
@@ -361,12 +362,14 @@ Page({
 
   },
 
+  //商品数量 减
   cutNumber: function() {
     this.setData({
       number: (this.data.number - 1 > 1) ? this.data.number - 1 : 1
     });
   },
 
+  //商品数量 加
   addNumber: function() {
     this.setData({
       number: this.data.number + 1
