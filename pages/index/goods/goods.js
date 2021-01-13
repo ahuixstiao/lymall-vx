@@ -177,6 +177,7 @@ Page({
   //获取选中的规格信息
   getCheckedSpecValue: function() {
     let checkedValues = [];
+    //保存商品规格集合
     let _specificationList = this.data.specificationList;
     for (let i = 0; i < _specificationList.length; i++) {
       let _checkedObj = {
@@ -205,6 +206,9 @@ Page({
     });
   },
 
+  /**
+   * 获取选中的规格文本与参数
+   */
   getCheckedSpecKey: function() {
     let checkedValue = this.getCheckedSpecValue().map(function(v) {
       return v.valueText;
@@ -212,10 +216,11 @@ Page({
     return checkedValue;
   },
 
-  // 规格改变时，重新计算价格及显示信息
+  /**
+   * 规格改变时，重新计算价格及显示信息
+   */
   changeSpecInfo: function() {
     let checkedNameValue = this.getCheckedSpecValue();
-
     //设置选择的信息
     let checkedValue = checkedNameValue.filter(function(v) {
       if (v.valueId != 0) {
@@ -226,6 +231,7 @@ Page({
     }).map(function(v) {
       return v.valueText;
     });
+    
     if (checkedValue.length > 0) {
       this.setData({
         tmpSpecText: checkedValue.join('　')
@@ -240,7 +246,6 @@ Page({
       this.setData({
         checkedSpecText: this.data.tmpSpecText
       });
-
       // 规格所对应的货品选择以后
       let checkedProductArray = this.getCheckedProductItem(this.getCheckedSpecKey());
       if (!checkedProductArray || checkedProductArray.length <= 0) {
@@ -255,25 +260,23 @@ Page({
       //console.log("checkedProduct: "+checkedProduct.url);
       if (checkedProduct.number > 0) {
         this.setData({
-          checkedSpecPrice: checkedProduct.price,
-          tmpPicUrl: checkedProduct.url,
+          checkedSpecPrice: checkedProduct.goodsRetailPrice,
+          tmpPicUrl: checkedProduct.goodsPicUrl,
           soldout: false
         });
       } else {
         this.setData({
-          checkedSpecPrice: this.data.goods.retailPrice,
+          checkedSpecPrice: this.data.goods.goodsRetailPrice,
           soldout: true
         });
       }
-
     } else {
       this.setData({
         checkedSpecText: '规格数量选择',
-        checkedSpecPrice: this.data.goods.retailPrice,
+        checkedSpecPrice: this.data.goods.goodsRetailPrice,
         soldout: false
       });
     }
-
   },
 
   // 获取选中的产品（根据规格）

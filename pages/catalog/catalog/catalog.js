@@ -6,9 +6,7 @@ Page({
     currentCategory: {},//当前父分类
     currentSubCategoryList: [],//当前子类别列表
     scrollLeft: 0, //选中的父分类
-    scrollTop: 0, //父分类的图片
     goodsCount: 0,//商品总数
-    scrollHeight: 0
   },
 
   /**
@@ -50,7 +48,7 @@ Page({
             goodsCount:result.data.data.goodsCount,//商品总数
             categoryList:result.data.data.categoryList,//所有商品父分类信息
             currentCategory:result.data.data.currentCategory,//获取当前选中的父分类对象
-            currentSubCategoryList:result.data.data.currentSubCategoryList,//获取当前分类的子分类信息
+            currentSubCategoryList:result.data.data.currentSubCategoryList,//获取当前父分类的子分类信息
           });
         }
         wx.hideLoading();
