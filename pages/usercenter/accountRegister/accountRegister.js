@@ -30,13 +30,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
@@ -176,39 +169,41 @@ Page({
           wx.showModal({
             content:"注册成功",
             showCancel:false,
-            success:function(){
-              wx.request({
-                url: api.accountLoginURL,//请求地址
-                data: {"userUsername":username,"userPassword":password},//请求参数
-                header:{"content-type":"application/x-www-form-urlencoded"},//设置请求的header，header中不能设置Referer content-type 默认为application/json
-                method:"POST",//HTTP 请求方法
-                dataType:"json",//返回的数据格式
-                success:function(result){//成功回调函数
-                  //判断登录状态 0为成功 1为失败
-                  if(result.data.errno==0){
-                    //注意:Storage和StorageSync的写法是不一样
-                    //获取cookie
-                    wx.setStorageSync("token",result.cookies[0]);
-                    //获取用户所有信息
-                    wx.setStorageSync("userinfo", result.data.data);
-                    //登录成功时将参数传递到全局配置文件的globalData
-                    app.globalData.userInfo=result.data.data;
-                    //登录成功时将登录状态设置为true
-                    app.globalData.hasLogin=true;
-                    //跳转至个人中心
-                    wx.switchTab({
+            success:function(res){
+              if(res.confirm){
+                wx.request({
+                  url: api.AuthLoginByAccount,//请求地址
+                  data: {"userUsername":username,"userPassword":password},//请求参数
+                  header:{"content-type":"application/x-www-form-urlencoded"},//设置请求的header，header中不能设置Referer content-type 默认为application/json
+                  method:"POST",//HTTP 请求方法
+                  dataType:"json",//返回的数据格式
+                  success:function(result){//成功回调函数
+                    //判断登录状态 0为成功 1为失败
+                    if(result.data.errno==0){
+                      //注意:Storage和StorageSync的写法是不一样
+                      //获取cookie
+                      wx.setStorageSync("token",result.cookies[0]);
+                      //获取用户所有信息
+                      wx.setStorageSync("userinfo", result.data.data);
+                      //登录成功时将参数传递到全局配置文件的globalData
+                      app.globalData.userInfo=result.data.data;
+                      //登录成功时将登录状态设置为true
+                      app.globalData.hasLogin=true;
+                      //跳转至个人中心
+                      wx.reLaunch({
                       url: '../userindex/userindex',
-                    })
-                  }
-                  else{
-                    wx.clearStorage();//清除Storage
-                    wx.showModal({
-                      content:result.data.errorMessage,
-                      showCancel:false//是否显示取消按钮
-                   })
-                  }
-                },
-              })
+                      })
+                    }
+                    else{
+                      wx.clearStorage();//清除Storage
+                      wx.showModal({
+                        content:result.data.errorMessage,
+                        showCancel:false//是否显示取消按钮
+                     })
+                    }
+                  },
+                })
+              }
             }
           })
         }else{

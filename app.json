@@ -6,6 +6,7 @@
     "pages/index/checkout/checkout",
     "pages/index/brand/brand",
     "pages/index/brandDetail/brandDetail",
+    "pages/couponSelect/couponSelect",
     "pages/logs/logs",
     "pages/cart/cart",
     "pages/catalog/catalog/catalog",

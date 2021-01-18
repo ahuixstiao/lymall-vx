@@ -32,7 +32,7 @@
     <view class="h">
       <view class="title">
         <view>
-          <navigator url="/pages/coupon/coupon">
+          <navigator url="/pages/couponList/couponList">
             <text class="txt">优惠券</text>
           </navigator>
         </view>

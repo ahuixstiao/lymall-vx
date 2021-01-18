@@ -70,6 +70,26 @@ Page({
     })
   },
 
+  //将登陆状态抽离
+  getUsercenter(url){
+    if (app.globalData.hasLogin) {
+      //已登录则跳转
+      wx.reLaunch({
+        url: url,
+      })
+    } else {
+      wx.showModal({
+        content: "请先登录",
+        showCancel: false,
+        success: function () {
+          wx.redirectTo({
+            url: '../loginChoose/loginChoose',
+          })
+        }
+      })
+    }
+  },
+
   //帮助中心跳转
   helpPage:function () {
     wx.reLaunch({
@@ -79,141 +99,41 @@ Page({
 
   //浏览足迹跳转
   browseFootprint:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转浏览足迹页面
-      wx.reLaunch({
-        url: '/pages/coreservices/browseFootprint/browseFootprint',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter("/pages/coreservices/browseFootprint/browseFootprint");
   },
 
   //待付款页面跳转
   pendpay:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到待付款页面
-      wx.reLaunch({
-        url: '',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter();
   },
 
   //待发货页面跳转
   send:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到代发货页面
-      wx.reLaunch({
-        url: '',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter();
   },
 
   //待收货页面跳转
   receive:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到待收货页面
-      wx.reLaunch({
-        url: '',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+   this.getUsercenter();
   },
 
   //待评价页面跳转
   comment:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到待评价页面
-      wx.reLaunch({
-        url: '',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter();
   },
 
   //售后页面跳转
   aftersale:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到售后页面
-      wx.reLaunch({
-        url: '',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter();
+  },
+
+  //优惠券页面跳转
+  couponList(){
+    this.getUsercenter("/pages/couponList/couponList");
   },
 
   //地址管理页面跳转
   address:function () {
-    if (app.globalData.hasLogin) {
-      //已登录则跳转到地址管理界面
-      wx.reLaunch({
-        url: '/pages/coreservices/addressManagement/addressManagement',
-      })
-    } else {
-      wx.showModal({
-        content: "请先登录",
-        showCancel: false,
-        success: function () {
-          wx.redirectTo({
-            url: '../loginChoose/loginChoose',
-          })
-        }
-      })
-    }
+    this.getUsercenter("/pages/coreservices/addressManagement/addressManagement");
   },
 })

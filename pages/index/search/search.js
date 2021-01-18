@@ -74,7 +74,6 @@ Page({
     if (e.detail.value) {
       this.getHelpKeyword(e.detail.value);
     }
-    
   },
 
   // 搜索框获得焦点 隐藏关键字以外的其他信息

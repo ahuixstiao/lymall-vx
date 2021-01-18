@@ -47,7 +47,7 @@
     <view class="user-row">
         <text class="user-row-title">核心服务</text>
     </view>
-    <view class="user-column">
+    <view class="user-column" bindtap="couponList">
       <!-- 优惠卷 -->
       <view class="user_column_item">
         <image class="user_column_item_image" src="/static/images/coupon.png"/>
