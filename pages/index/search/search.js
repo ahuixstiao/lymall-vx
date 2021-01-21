@@ -193,7 +193,7 @@ Page({
     let that = this;
     let keyword = this.data.keyword; //输入的关键字
     let categoryId = this.data.categoryId; //选中的商品分类
-    let orderCloumn = this.data.currentSort; //排序字段
+    let orderColumn = this.data.currentSort; //排序字段
     let orderType = this.data.currentSortOrder; //排序方式
     //发送请求
     wx.request({
@@ -201,7 +201,7 @@ Page({
       data: {
         "keyword": keyword,
         "categoryId": categoryId,
-        "orderCloumn": orderCloumn,
+        "orderColumn": orderColumn,
         "orderType": orderType
       },
       dataType: "json",

@@ -32,15 +32,15 @@
     <view class="h">
       <view class="title">
         <view>
-          <navigator url="/pages/couponList/couponList">
+          <navigator url="/pages/coreservices/couponList/couponList">
             <text class="txt">优惠券</text>
           </navigator>
         </view>
       </view>
     </view>
     <view wx:if="{{coupon.length > 0}}" class="b">
-      <view class="item" wx:for="{{coupon}}" wx:for-index="index" wx:for-item="item" wx:key="couponId" bindtap="getCoupon"
-        data-index="{{item.couponId}}">
+      <view class="item" wx:for="{{coupon}}" wx:for-index="index" wx:for-item="item" wx:key="id" bindtap="getCoupon"
+        data-index="{{item}}">
         <view class="tag">{{item.couponTag}}</view>
         <view class="content">
           <view class="left">
@@ -146,7 +146,7 @@
     </view>
     <view class="b">
       <view class="item" wx:for="{{hotGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-        <navigator url="/pages/goods/goods?id={{item.goodsId}}">
+        <navigator url="../goods/goods?id={{item.goodsId}}">
           <image class="img" src="{{item.goodsPicUrl}}" background-size="cover"></image>
           <view class="right">
             <view class="text">

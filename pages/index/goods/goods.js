@@ -12,7 +12,7 @@ Page({
     comment: [],//评论
     brand: {},//品牌商
     specificationList: [],//规格列表
-    productList: [],
+    productList: [], //选中的商品规格
     relatedGoods: [],//推荐商品信息
     cartGoodsCount: 0,
     userHasCollect: 0,
@@ -75,7 +75,6 @@ Page({
       method:"POST",
       header:{"content-type": "application/x-www-form-urlencoded"},
       success:function(result){
-        console.log(result);
         //保存商品信息
         var goods=result.data.data.goodsInfo;
         //将商品的详情图从字符串数组转换成json数组
@@ -107,7 +106,7 @@ Page({
   getBrandInfo:function(brandId){
     let that=this;
     wx.request({
-      url: api.SelectByBrandIdFindInfo,
+      url: api.BrandDetail,
       data:{"brandId":brandId},
       dataType:"json",
       method:"POST",
@@ -144,12 +143,12 @@ Page({
     let specName = event.currentTarget.dataset.name;//保存当前选中的商品规格
     let specValueId = event.currentTarget.dataset.valueId;//保存当前选中的商品规格id
     let _specificationList = this.data.specificationList;//保存商品规格数组
-    //判断是否可以点击
+    //遍历数组
     for (let i = 0; i < _specificationList.length; i++) {
-      let _specName=_specificationList[i].goodsSpecifications[i].goodsSpecificationValue;
       //判断用户是否选中商品规格
-      if (_specName == specName) {
+      if (specName==_specificationList[i].goodsSpecifications[i].goodsSpecificationValue) {
         for (let j = 0; j < _specificationList[i].goodsSpecifications.length; j++) {
+          //判断内层数组中的规格id是否存在用户所选中的规格id
           if (_specificationList[i].goodsSpecifications[j].goodsSpecificationId == specValueId) {
             //如果已经选中，则反选
             if (_specificationList[i].goodsSpecifications[j].checked) {
@@ -163,37 +162,52 @@ Page({
         }
       }
     }
-    //将选中状态返回
-    this.setData({
+    //将规格的选中状态返回 被选中的规格 checked状态为true
+    that.setData({
       specificationList: _specificationList,
     });
 
     //重新计算spec改变后的信息
     this.changeSpecInfo();
-
-    //重新计算哪些值不可以点击
   },
 
-  //获取选中的规格信息
+  /**
+   * 获取选中的规格信息 并保存选中的规格
+   */
   getCheckedSpecValue: function() {
+    let that=this;
     let checkedValues = [];
-    //保存商品规格集合
+    //保存商品规格数组
     let _specificationList = this.data.specificationList;
+    //遍历数组外层获取规格的name属性
     for (let i = 0; i < _specificationList.length; i++) {
+      //保存选中的商品规格name
       let _checkedObj = {
-        name: _specificationList[i].goodsSpecifications.goodsSpecificationValue,
+        name: _specificationList[i].name,
         valueId: 0,
         valueText: ''
       };
+      //遍历数组内层获取对应外层name的规格信息
       for (let j = 0; j < _specificationList[i].goodsSpecifications.length; j++) {
         if (_specificationList[i].goodsSpecifications[j].checked) {
+          //获取规格id
           _checkedObj.valueId = _specificationList[i].goodsSpecifications[j].goodsSpecificationId;
+          //获取规格参数
           _checkedObj.valueText = _specificationList[i].goodsSpecifications[j].goodsSpecificationValue;
         }
       }
+      //推送选中的商品规格
       checkedValues.push(_checkedObj);
     }
+    //保存选中的规格参数
+    that.setData({productList:checkedValues});
+    
+    //并通过该规格查询 价格与商品剩余数量等
+    wx.request({
+      url: 'url',
+    })
 
+    //该方法返回一个商品规格数组
     return checkedValues;
   },
 
@@ -216,10 +230,27 @@ Page({
     return checkedValue;
   },
 
+  // 获取选中的产品（根据规格）
+  getCheckedProductItem: function(key) {
+    let that=this;
+    //返回参数与状态
+    return this.data.productList.filter(function(v) {
+      for(let i=0;i<=that.data.productList.length;i++){
+        //判断选中的商品与传递过来的商品是否一致
+        if (key[i]==v.valueText) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
+  },
+
   /**
    * 规格改变时，重新计算价格及显示信息
    */
   changeSpecInfo: function() {
+    //获取选中的规格信息
     let checkedNameValue = this.getCheckedSpecValue();
     //设置选择的信息
     let checkedValue = checkedNameValue.filter(function(v) {
@@ -241,14 +272,16 @@ Page({
         tmpSpecText: '请选择规格数量'
       });
     }
-
+    //判断规格参数是否选择完整
     if (this.isCheckedAllSpec()) {
       this.setData({
         checkedSpecText: this.data.tmpSpecText
       });
       // 规格所对应的货品选择以后
       let checkedProductArray = this.getCheckedProductItem(this.getCheckedSpecKey());
+      //判断规格所对应的货品是否存在
       if (!checkedProductArray || checkedProductArray.length <= 0) {
+        //将该货品设为已售空
         this.setData({
           soldout: true
         });
@@ -257,7 +290,6 @@ Page({
       }
 
       let checkedProduct = checkedProductArray[0];
-      //console.log("checkedProduct: "+checkedProduct.url);
       if (checkedProduct.number > 0) {
         this.setData({
           checkedSpecPrice: checkedProduct.goodsRetailPrice,
@@ -279,17 +311,6 @@ Page({
     }
   },
 
-  // 获取选中的产品（根据规格）
-  getCheckedProductItem: function(key) {
-    return this.data.productList.filter(function(v) {
-      if (v.specifications.toString() == key.toString()) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  },
-
   //添加或是取消收藏
   addCollectOrNot: function() {
     let that = this;
@@ -308,7 +329,10 @@ Page({
 
       //提示选择完整规格
       if (!this.isCheckedAllSpec()) {
-
+        wx.showModal({
+          content:"请选择完整规格",
+          showCancel: false,
+        })
         return false;
       }
 
@@ -340,7 +364,10 @@ Page({
 
       //提示选择完整规格
       if (!this.isCheckedAllSpec()) {
-        
+        wx.showModal({
+          content:"请选择完整规格",
+          showCancel: false,
+        })
         return false;
       }
 
@@ -360,7 +387,9 @@ Page({
       }
 
       //添加到购物车
-      
+      wx.request({
+        url: 'url',
+      })
     }
 
   },

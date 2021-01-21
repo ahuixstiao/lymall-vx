@@ -17,11 +17,13 @@ module.exports={
   SearchClearHistory:WxApiRoot+"search/clearhistory", //搜索历史清除
   SelectByGoodsIdFindGoods:WxApiRoot+"select/goods",//查询商品信息
   SelectByPopularProduct:WxApiRoot+"select/hotgoodsinfo",//查询热门商品信息
-  SelectByBrandIdFindInfo:WxApiRoot+"select/BrandInfo",//查询品牌信息
-  BrandList:WxApiRoot+"brand/list",//查询品牌商信息
-  BrandDetail:WxApiRoot+"brand/detail",//查询品牌商详情
+  BrandDetail:WxApiRoot+"brand/detail",//查询单个品牌商详情
+  BrandList:WxApiRoot+"brand/list",//查询全部品牌商信息
   BrandFindGoodsList:WxApiRoot+"brand/goodslist",//查询品牌商下的商品
   CatalogList:WxApiRoot+"catalog/index",//查询分类目录
-  CatalogCurrentCategory:WxApiRoot+"catalog/currentCategory",//查询当前选中的父分类的子分类信息
+  CatalogCurrentCategory:WxApiRoot+"catalog/currentCategory",//查询选中的父分类的子分类信息
   CatagoryGoodsInfo:WxApiRoot+"catalog/currentCategoryGoodsList",//查询当前分类的商品信息
+  GetCoupon:WxApiRoot+"coupon/getCoupon",//领取优惠券
+  SelectUserCouponInfo:WxApiRoot+"coupon/selectUserCoupon",//查询用户所有优惠券信息
+  PromoCodGetCoupon:WxApiRoot+"coupon/promoCodGetCoupon",//通过优惠码兑换优惠券
 }

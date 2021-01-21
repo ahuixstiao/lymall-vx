@@ -129,7 +129,7 @@ Page({
 
   //优惠券页面跳转
   couponList(){
-    this.getUsercenter("/pages/couponList/couponList");
+    this.getUsercenter("/pages/coreservices/couponList/couponList");
   },
 
   //地址管理页面跳转

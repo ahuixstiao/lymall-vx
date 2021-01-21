@@ -1,9 +1,0 @@
-<!--pages/coreservices/browseFootprint/browseFootprint.wxml-->
-<view class="container">
-  <view class="footprint-box">
-    <view class="footprint-box-item">
-      <image class="footprint-image" />
-      <text class="fotprint-text">1111</text>
-    </view>
-  </view>
-</view>
